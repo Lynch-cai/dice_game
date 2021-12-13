@@ -1,48 +1,97 @@
-from random import randint
-
+import random
 
 # Target total score to win by default
-DEFAULT_TARGET_SCORE = 2000
 
-# Number of dices by default in the set
-DEFAULT_DICES_NB = 5
-# Number of side of the dices used in the game
-NB_DICE_SIDE = 6
 
-# List of dice value scoring
-LIST_SCORING_DICE_VALUE = [1, 5]
-# List of associated score for scoring dice values
-LIST_SCORING_MULTIPLIER = [100, 50]
+NB_DICE_SIDE = 6  # Nb of side of the Dices
+SCORING_DICE_VALUE_LIST = [
+    1,
+    5,
+]  # List of the side values of the dice who trigger a standard score
+SCORING_MULTIPLIER_LIST = [100, 50]  # List of multiplier for standard score
 
-# Trigger for multiple bonus
-TRIGGER_OCCURRENCE_FOR_BONUS = 3
-# Special bonus multiplier for multiple ace bonus
-BONUS_VALUE_FOR_ACE_BONUS = 1000
-# Standard multiplier for multiple dices value bonus
-BONUS_VALUE_FOR_NORMAL_BONUS = 100
+THRESHOLD_BONUS = 3  # Threshold of the triggering for bonus in term of occurrence of the same slide value
+STD_BONUS_MULTIPLIER = 100  # Standard multiplier for bonus
+ACE_BONUS_MULTIPLIER = 1000  # Special multiplier for aces bonus
 
-def listOccurency(nbDiceRoll):
-    list = [0] * NB_DICE_SIDE
-    roll = 0
-    while roll < nbDiceRoll:
-        dice = randint(1,NB_DICE_SIDE)
-        list[dice - 1] += 1
-        roll += 1
-    print(list)
-    return list
+# return a list of dices value occurrence for a roll of nb_dice_to_roll dices
+def roll_dice_set(nb_dice_to_roll):
+    dice_value_occurrence_list = [0] * NB_DICE_SIDE
+    for n in range(nb_dice_to_roll):
+        dice_value = random.randint(1, NB_DICE_SIDE)
+        dice_value_occurrence_list[dice_value - 1] += 1
 
-def score(Occurency):
-    side = 0
+    return dice_value_occurrence_list
+
+
+def analyse_bonus_score(dice_value_occurrence_list):
     score = 0
-    while side < NB_DICE_SIDE:
-        if Occurency[side] >= 3:
-            if side == 0:
-                score += (side + 1) * BONUS_VALUE_FOR_ACE_BONUS
-            else:
-                score += (side + 1) * BONUS_VALUE_FOR_NORMAL_BONUS
-        side += 1
-        
-    return score
+    for side_value_index, dice_value_occurrence in enumerate(
+        dice_value_occurrence_list
+    ):
+        nb_of_bonus = dice_value_occurrence // THRESHOLD_BONUS
+        if nb_of_bonus > 0:
 
-if __name__ == "__main__":
-    print(score(listOccurency(DEFAULT_DICES_NB)))
+            if side_value_index == 0:
+                bonus_multiplier = ACE_BONUS_MULTIPLIER
+            else:
+                bonus_multiplier = STD_BONUS_MULTIPLIER
+            score += nb_of_bonus * bonus_multiplier * (side_value_index + 1)
+            dice_value_occurrence_list[side_value_index] %= THRESHOLD_BONUS
+
+    return score, dice_value_occurrence_list
+
+
+def analyse_standard_score(dice_value_occurrence_list):
+    score = 0
+    for scoring_value, scoring_multiplier in zip(
+        SCORING_DICE_VALUE_LIST, SCORING_MULTIPLIER_LIST
+    ):
+        score += (
+            dice_value_occurrence_list[scoring_value - 1] * scoring_multiplier
+        )
+
+        dice_value_occurrence_list[scoring_value - 1] = 0
+
+    return score, dice_value_occurrence_list
+
+
+def analyse_score(dice_value_occurrence_list):
+    bonus_score, dice_value_occurrence_list = analyse_bonus_score(
+        dice_value_occurrence_list
+    )
+    standard_score, dice_value_occurrence_list = analyse_standard_score(
+        dice_value_occurrence_list
+    )
+
+    return bonus_score + standard_score, dice_value_occurrence_list
+
+
+def get_dices_match():
+    pass
+
+
+def turn_result():
+    play = True
+    nb_dices = 5
+    turn_score = 0
+
+    while play:
+        r = roll_dice_set(nb_dices)
+        analyse = analyse_score(r)
+        score = analyse[0]
+        turn_score += score
+        nb_dices = sum(analyse[1])
+        print(
+            f"scoring dices [(1, 1), (1, 5)] scoring {score} potential total turn score {turn_score} remaining dice to roll : {nb_dices}"
+        )
+        resp_user = input("[y/n]?")
+        if resp_user == "n":
+            play = False
+
+
+def gaming():
+    pass
+
+
+turn_result()
