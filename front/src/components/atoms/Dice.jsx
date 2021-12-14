@@ -23,7 +23,7 @@ const Container = styled("div")`
 const Cube = styled("div")`
     width: 112px;
     height: 112px;
-    top: ${({ index }) => `${50 + index}px` };
+    top: ${({ index }) => `${50 + -index}px` };
     transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
