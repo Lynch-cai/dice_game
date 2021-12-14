@@ -1,169 +1,59 @@
-import random
-import statistics as stat
-
-from constant import (
-    NB_DICE_SIDE,
-    THRESHOLD_BONUS,
-    ACE_BONUS_MULTIPLIER,
-    STD_BONUS_MULTIPLIER,
-    SCORING_DICE_VALUE_LIST,
-    SCORING_MULTIPLIER_LIST,
-    DEFAULT_TARGET_SCORE,
-)
-
-MAX_TURN_SCORING = {"name_player": "", "turn_score": 0}
-LONGEST_TURNING = {"name_player": "", "nb_roll": 0}
-MAX_TURN_LOSS = {"name_player": "", "turn_score": 0}
-MEAN_SCORE_TURN = []
-MEAN_NON_SCORE_TURN = []
+from back.module.player import add_players
+from back.utils import check_user_boolean_response
+from back.module.score import score_winner_checker
+from back.module.turn import turn_generator
 
 
-def roll_dice_set(nb_dice_to_roll):
-    dice_value_occurrence_list = [0] * NB_DICE_SIDE
-    for n in range(nb_dice_to_roll):
-        dice_value = random.randint(1, NB_DICE_SIDE)
-        dice_value_occurrence_list[dice_value - 1] += 1
+def dice_game_launcher(play_again):
 
-    return dice_value_occurrence_list
+    # Global game variable
 
+    max_turn_scoring = 0
+    longuest_turn = 0
+    max_turn_loss = 0
+    mean_scoring_turn = 0
+    mean_non_scoring_turn = 0
+    game_running = False
 
-def analyse_bonus_score(dice_value_occurrence_list):
-    score = 0
-    for side_value_index, dice_value_occurrence in enumerate(
-        dice_value_occurrence_list
-    ):
-        nb_of_bonus = dice_value_occurrence // THRESHOLD_BONUS
-        if nb_of_bonus > 0:
+    # Initializing the game
+    if play_again == True:
+        new_game = True
+    else:
+        new_game = check_user_boolean_response(input('Hello & Welcome to the Hetic dice game tournment ! \nDo you want to start a new game ? [y/n]'))
 
-            if side_value_index == 0:
-                bonus_multiplier = ACE_BONUS_MULTIPLIER
-            else:
-                bonus_multiplier = STD_BONUS_MULTIPLIER
-            score += nb_of_bonus * bonus_multiplier * (side_value_index + 1)
-            dice_value_occurrence_list[side_value_index] %= THRESHOLD_BONUS
+    if new_game:
 
-    return score, dice_value_occurrence_list
+        # Add players
+        players = add_players()
 
+        # Start Main game loop
+        print("Let's begin the game !")
+        game_running = True
+        while game_running:
+            player_turn_info = turn_generator(players[0])
 
-def analyse_standard_score(dice_value_occurrence_list):
-    score = 0
-    for scoring_value, scoring_multiplier in zip(
-        SCORING_DICE_VALUE_LIST, SCORING_MULTIPLIER_LIST
-    ):
-        score += (
-            dice_value_occurrence_list[scoring_value - 1] * scoring_multiplier
-        )
+            winner = score_winner_checker(players)
 
-        dice_value_occurrence_list[scoring_value - 1] = 0
+            if winner:
+                game_running = False
+                print("Someone win ! Game in 6 turn")
+                new_game = check_user_boolean_response(input('Do you want to again ? [y/n]'))
 
-    return score, dice_value_occurrence_list
-
-
-def analyse_score(dice_value_occurrence_list):
-    bonus_score, dice_value_occurrence_list = analyse_bonus_score(
-        dice_value_occurrence_list
-    )
-    standard_score, dice_value_occurrence_list = analyse_standard_score(
-        dice_value_occurrence_list
-    )
-
-    return bonus_score + standard_score, dice_value_occurrence_list
+                if new_game:
+                    return dice_game_launcher(True)
+                else:
+                    print('Good by see you next time')
 
 
-def get_dices_match(dice_value_occurrence_list):
-    list_dices_match = []
-    for side_value_index, dice_value_occurrence in enumerate(
-        dice_value_occurrence_list
-    ):
-        if side_value_index == 0 and dice_value_occurrence >= 1:
-            list_dices_match.append(
-                [dice_value_occurrence, side_value_index + 1]
-            )
-        elif side_value_index == 4 and dice_value_occurrence > 0:
-            list_dices_match.append(
-                [dice_value_occurrence, side_value_index + 1]
-            )
-        else:
-            nb_dices_match = dice_value_occurrence // THRESHOLD_BONUS
-            if nb_dices_match > 0:
-                list_dices_match.append(
-                    [nb_dices_match * 3, side_value_index + 1]
-                )
 
-    return list_dices_match
+    else:
+        print('Good by see you next time')
 
 
-def turn_result(name_player):
-    global MEAN_SCORE_TURN, MEAN_NON_SCORE_TURN
-    play = True
-    nb_dices = 5
-    turn_score = 0
-    nb_roll = 0
-
-    while play:
-        roll_dice = roll_dice_set(nb_dices)
-        dices_match = get_dices_match(roll_dice)
-        analyse = analyse_score(roll_dice)
-        score = analyse[0]
-        turn_score += score
-        nb_dices = sum(analyse[1])
-        print(
-            f"scoring dices {dices_match} scoring {score} potential total turn score {turn_score} remaining dice to roll : {nb_dices}"
-        )
-        if score > 0:
-            resp_user = input("[y/n]?")
-            if resp_user == "n":
-                apply_max_turn_score(
-                    name_player=name_player, turn_score=turn_score
-                )
-                MEAN_SCORE_TURN.append(int(turn_score))
-                play = False
-            else:
-                nb_roll += 1
-        else:
-            print(
-                f"you lose this turn and a potential to score {turn_score} pts"
-            )
-            apply_max_turn_loss(name_player=name_player, turn_score=turn_score)
-            MEAN_NON_SCORE_TURN.append(turn_score)
-            turn_score = 0
-            play = False
-
-    apply_longest_turn(name_player=name_player, nb_roll=nb_roll)
 
 
-def apply_max_turn_loss(name_player, turn_score):
-    global MAX_TURN_LOSS
-    if turn_score > MAX_TURN_LOSS["turn_score"]:
-        MAX_TURN_LOSS = {
-            "name_player": name_player,
-            "turn_score": turn_score,
-        }
 
 
-def apply_max_turn_score(name_player, turn_score):
-    global MAX_TURN_SCORING
-    if turn_score > MAX_TURN_SCORING["turn_score"]:
-        MAX_TURN_SCORING = {
-            "name_player": name_player,
-            "turn_score": turn_score,
-        }
 
 
-def apply_longest_turn(name_player, nb_roll):
-    global LONGEST_TURNING
-    if nb_roll > LONGEST_TURNING["nb_roll"]:
-        LONGEST_TURNING = {
-            "name_player": name_player,
-            "nb_roll": nb_roll,
-        }
 
-
-def calcul_means(list_mean):
-    if len(list_mean) > 0:
-        mean = stat.mean(list_mean)
-        return mean
-
-
-def gaming():
-    pass

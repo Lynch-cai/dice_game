@@ -1,4 +1,4 @@
-from index import turn_result
+from index import  dice_game_launcher
 
 if __name__ == "__main__":
-    turn_result()
+    dice_game_launcher(False)

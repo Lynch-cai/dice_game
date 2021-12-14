@@ -1,14 +1,22 @@
 import random
-from back.utils.score_utils import analyse_score
+from back.module.score import analyse_score
 from ..constant import (
     NB_DICE_SIDE,
     THRESHOLD_BONUS,
 )
 
-def player_turn_generator():
+MAX_TURN_SCORING = {"name_player": "", "turn_score": 0}
+LONGEST_TURNING = {"name_player": "", "nb_roll": 0}
+MAX_TURN_LOSS = {"name_player": "", "turn_score": 0}
+MEAN_SCORE_TURN = []
+MEAN_NON_SCORE_TURN = []
+
+def turn_generator(player_name):
+    global MEAN_SCORE_TURN, MEAN_NON_SCORE_TURN
     play = True
     nb_dices = 5
     turn_score = 0
+    nb_roll = 0
 
     while play:
         roll_dice = roll_dice_set(nb_dices)
@@ -23,15 +31,26 @@ def player_turn_generator():
         if score > 0:
             resp_user = input("[y/n]?")
             if resp_user == "n":
+                apply_max_turn_score(
+                    name_player=player_name, turn_score=turn_score
+                )
+                MEAN_SCORE_TURN.append(int(turn_score))
                 play = False
-                return score,roll_dice
+                return score, roll_dice
+            else:
+                nb_roll += 1
         else:
             print(
                 f"you lose this turn and a potential to score {turn_score} pts"
             )
+            apply_max_turn_loss(name_player=player_name, turn_score=turn_score)
+            MEAN_NON_SCORE_TURN.append(turn_score)
             turn_score = 0
             play = False
             return score, roll_dice
+
+    apply_longest_turn(name_player=player_name, nb_roll=nb_roll)
+
 
 
 
@@ -68,3 +87,36 @@ def get_dices_match(dice_value_occurrence_list):
                     [nb_dices_match * 3, side_value_index + 1]
                 )
     return list_dices_match
+
+
+def apply_max_turn_loss(name_player, turn_score):
+    global MAX_TURN_LOSS
+    if turn_score > MAX_TURN_LOSS["turn_score"]:
+        MAX_TURN_LOSS = {
+            "name_player": name_player,
+            "turn_score": turn_score,
+        }
+
+
+def apply_max_turn_score(name_player, turn_score):
+    global MAX_TURN_SCORING
+    if turn_score > MAX_TURN_SCORING["turn_score"]:
+        MAX_TURN_SCORING = {
+            "name_player": name_player,
+            "turn_score": turn_score,
+        }
+
+
+def apply_longest_turn(name_player, nb_roll):
+    global LONGEST_TURNING
+    if nb_roll > LONGEST_TURNING["nb_roll"]:
+        LONGEST_TURNING = {
+            "name_player": name_player,
+            "nb_roll": nb_roll,
+        }
+
+
+def calcul_means(list_mean):
+    if len(list_mean) > 0:
+        mean = stat.mean(list_mean)
+        return mean
