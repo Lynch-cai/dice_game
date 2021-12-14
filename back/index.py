@@ -9,6 +9,11 @@ from constant import (
     DEFAULT_TARGET_SCORE,
 )
 
+MAX_TURN_SCORING = {"name_player": "", "turn_score": 0}
+LONGEST_TURNING = {"name_player": "", "nb_roll": 0}
+MAX_TURN_LOSS = {"name_player": "", "turn_score": 0}
+MEAN_SCORE_TURN = 0
+
 
 def roll_dice_set(nb_dice_to_roll):
     dice_value_occurrence_list = [0] * NB_DICE_SIDE
@@ -85,10 +90,11 @@ def get_dices_match(dice_value_occurrence_list):
     return list_dices_match
 
 
-def turn_result():
+def turn_result(name_player):
     play = True
     nb_dices = 5
     turn_score = 0
+    nb_roll = 0
 
     while play:
         roll_dice = roll_dice_set(nb_dices)
@@ -103,13 +109,48 @@ def turn_result():
         if score > 0:
             resp_user = input("[y/n]?")
             if resp_user == "n":
+                apply_max_turn_score(
+                    name_player=name_player, turn_score=turn_score
+                )
                 play = False
+            else:
+                nb_roll += 1
         else:
             print(
                 f"you lose this turn and a potential to score {turn_score} pts"
             )
+            apply_max_turn_loss(name_player=name_player, turn_score=turn_score)
             turn_score = 0
             play = False
+
+    apply_longest_turn(name_player=name_player, nb_roll=nb_roll)
+
+
+def apply_max_turn_loss(name_player, turn_score):
+    global MAX_TURN_LOSS
+    if turn_score > MAX_TURN_LOSS["turn_score"]:
+        MAX_TURN_LOSS = {
+            "name_player": name_player,
+            "turn_score": turn_score,
+        }
+
+
+def apply_max_turn_score(name_player, turn_score):
+    global MAX_TURN_SCORING
+    if turn_score > MAX_TURN_SCORING["turn_score"]:
+        MAX_TURN_SCORING = {
+            "name_player": name_player,
+            "turn_score": turn_score,
+        }
+
+
+def apply_longest_turn(name_player, nb_roll):
+    global LONGEST_TURNING
+    if nb_roll > LONGEST_TURNING["nb_roll"]:
+        LONGEST_TURNING = {
+            "name_player": name_player,
+            "nb_roll": nb_roll,
+        }
 
 
 def gaming():
