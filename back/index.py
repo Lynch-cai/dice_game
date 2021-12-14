@@ -1,20 +1,15 @@
 import random
+from constant import (
+    NB_DICE_SIDE,
+    THRESHOLD_BONUS,
+    ACE_BONUS_MULTIPLIER,
+    STD_BONUS_MULTIPLIER,
+    SCORING_DICE_VALUE_LIST,
+    SCORING_MULTIPLIER_LIST,
+    DEFAULT_TARGET_SCORE,
+)
 
-# Target total score to win by default
 
-
-NB_DICE_SIDE = 6  # Nb of side of the Dices
-SCORING_DICE_VALUE_LIST = [
-    1,
-    5,
-]  # List of the side values of the dice who trigger a standard score
-SCORING_MULTIPLIER_LIST = [100, 50]  # List of multiplier for standard score
-
-THRESHOLD_BONUS = 3  # Threshold of the triggering for bonus in term of occurrence of the same slide value
-STD_BONUS_MULTIPLIER = 100  # Standard multiplier for bonus
-ACE_BONUS_MULTIPLIER = 1000  # Special multiplier for aces bonus
-
-# return a list of dices value occurrence for a roll of nb_dice_to_roll dices
 def roll_dice_set(nb_dice_to_roll):
     dice_value_occurrence_list = [0] * NB_DICE_SIDE
     for n in range(nb_dice_to_roll):
@@ -67,8 +62,27 @@ def analyse_score(dice_value_occurrence_list):
     return bonus_score + standard_score, dice_value_occurrence_list
 
 
-def get_dices_match():
-    pass
+def get_dices_match(dice_value_occurrence_list):
+    list_dices_match = []
+    for side_value_index, dice_value_occurrence in enumerate(
+        dice_value_occurrence_list
+    ):
+        if side_value_index == 0 and dice_value_occurrence >= 1:
+            list_dices_match.append(
+                [dice_value_occurrence, side_value_index + 1]
+            )
+        elif side_value_index == 4 and dice_value_occurrence > 0:
+            list_dices_match.append(
+                [dice_value_occurrence, side_value_index + 1]
+            )
+        else:
+            nb_dices_match = dice_value_occurrence // THRESHOLD_BONUS
+            if nb_dices_match > 0:
+                list_dices_match.append(
+                    [nb_dices_match * 3, side_value_index + 1]
+                )
+
+    return list_dices_match
 
 
 def turn_result():
@@ -77,21 +91,28 @@ def turn_result():
     turn_score = 0
 
     while play:
-        r = roll_dice_set(nb_dices)
-        analyse = analyse_score(r)
+        roll_dice = roll_dice_set(nb_dices)
+        dices_match = get_dices_match(roll_dice)
+        analyse = analyse_score(roll_dice)
         score = analyse[0]
         turn_score += score
         nb_dices = sum(analyse[1])
         print(
-            f"scoring dices [(1, 1), (1, 5)] scoring {score} potential total turn score {turn_score} remaining dice to roll : {nb_dices}"
+            f"scoring dices {dices_match} scoring {score} potential total turn score {turn_score} remaining dice to roll : {nb_dices}"
         )
-        resp_user = input("[y/n]?")
-        if resp_user == "n":
+        if score > 0:
+            resp_user = input("[y/n]?")
+            if resp_user == "n":
+                play = False
+        else:
+            print(
+                f"you lose this turn and a potential to score {turn_score} pts"
+            )
+            turn_score = 0
             play = False
 
 
 def gaming():
-    pass
-
-
-turn_result()
+    play = True
+    while play:
+        pass
