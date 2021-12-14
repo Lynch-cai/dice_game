@@ -1,4 +1,6 @@
 import random
+import statistics as stat
+
 from constant import (
     NB_DICE_SIDE,
     THRESHOLD_BONUS,
@@ -12,7 +14,8 @@ from constant import (
 MAX_TURN_SCORING = {"name_player": "", "turn_score": 0}
 LONGEST_TURNING = {"name_player": "", "nb_roll": 0}
 MAX_TURN_LOSS = {"name_player": "", "turn_score": 0}
-MEAN_SCORE_TURN = 0
+MEAN_SCORE_TURN = []
+MEAN_NON_SCORE_TURN = []
 
 
 def roll_dice_set(nb_dice_to_roll):
@@ -91,6 +94,7 @@ def get_dices_match(dice_value_occurrence_list):
 
 
 def turn_result(name_player):
+    global MEAN_SCORE_TURN, MEAN_NON_SCORE_TURN
     play = True
     nb_dices = 5
     turn_score = 0
@@ -112,6 +116,7 @@ def turn_result(name_player):
                 apply_max_turn_score(
                     name_player=name_player, turn_score=turn_score
                 )
+                MEAN_SCORE_TURN.append(int(turn_score))
                 play = False
             else:
                 nb_roll += 1
@@ -120,6 +125,7 @@ def turn_result(name_player):
                 f"you lose this turn and a potential to score {turn_score} pts"
             )
             apply_max_turn_loss(name_player=name_player, turn_score=turn_score)
+            MEAN_NON_SCORE_TURN.append(turn_score)
             turn_score = 0
             play = False
 
@@ -153,7 +159,11 @@ def apply_longest_turn(name_player, nb_roll):
         }
 
 
+def calcul_means(list_mean):
+    if len(list_mean) > 0:
+        mean = stat.mean(list_mean)
+        return mean
+
+
 def gaming():
-    play = True
-    while play:
-        pass
+    pass
