@@ -37,9 +37,9 @@ const arr = [
 
 export const GameTable = () => (
     <Container>
-        {arr.map((style) => (
-            <PillarContainer style={style}>
-                <Pillar />
+        {arr.map((element, index) => (
+            <PillarContainer key={index} style={element}>
+                <Pillar diceValue={element.diceValue} />
             </PillarContainer>
         ))}
     </Container> 

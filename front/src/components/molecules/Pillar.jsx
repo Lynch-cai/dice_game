@@ -4,10 +4,10 @@ import styled from "styled-components"
 import { Dice } from "../atoms/Dice"
 import { Rectangle } from "../atoms/Rectangle"
 
-export const Pillar = () => (
+export const Pillar = ({ diceValue }) => (
     <Container>
         <DiceContainer>
-            <Dice />
+            <Dice diceValue={diceValue} />
         </DiceContainer>
         <RectangleContainer>
             <Rectangle />

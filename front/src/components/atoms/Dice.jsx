@@ -3,15 +3,15 @@ import styled from "styled-components"
 
 const slice = [1, 2, 3, 4, 5, 6];
 
-export const Dice = () => (
+export const Dice = ({ diceValue }) => (
     <Container>
         {slice.map((_, index) => (
             <Cube key={index} index={index}>
-                <Top index={index} />
-            </Cube>   
-        ))}     
+                <Top index={index} value={diceValue} />
+            </Cube>
+        ))}
     </Container>
-)
+);
 
 const Container = styled("div")`
     position: relative;
