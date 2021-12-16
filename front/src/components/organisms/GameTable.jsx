@@ -53,5 +53,4 @@ const Container = styled("div")`
 
 const PillarContainer = styled("div")`
     position: absolute;
-
 `

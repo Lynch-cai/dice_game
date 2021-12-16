@@ -9,9 +9,7 @@ export const Pillar = ({ diceValue }) => (
         <DiceContainer>
             <Dice diceValue={diceValue} />
         </DiceContainer>
-        <RectangleContainer>
-            <Rectangle />
-        </RectangleContainer>
+        <Rectangle />
     </Container>
 )
 
@@ -25,7 +23,4 @@ const DiceContainer = styled("div")`
     position: absolute;
     top: -40px;
     left: 13px;
-`
-
-const RectangleContainer = styled("div")`
 `
