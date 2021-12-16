@@ -42,7 +42,7 @@ const Face = styled("div")`
     height: 4px; //4px
     float: left;
     overflow: hidden;
-    background: ${({ index }) => index === slice.length - 1 ? "linear-gradient(270deg, #B78DD8 4.72%, #938ECE 95.75%)" : "linear-gradient(90.21deg, #907BCB 0.03%, #745E7C 99.76%)" }; 
+    background: ${({ index }) => index === slice.length - 1 ? "linear-gradient(rgba(255, 255, 255, 1),rgba(249, 249, 249, 1),rgba(223, 223, 223, 1))" : "linear-gradient(rgba(243, 243, 243, 1),rgba(175, 175, 175, 1))" }; 
 `
 const Top = styled(Face)`
     transform: rotatex(90deg) rotatey(0deg) translateX(0px) translateY(0px) translateZ(56px);
