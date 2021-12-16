@@ -2,36 +2,6 @@ import React from 'react'
 import styled from "styled-components"
 
 const slice = [1, 2, 3, 4, 5, 6];
-const diceGradiants = {
-    0: {
-        up: "linear-gradient(rgba(255, 255, 255, 1),rgba(249, 249, 249, 1),rgba(223, 223, 223, 1))",
-        down: "linear-gradient(rgba(175, 175, 175, 1),rgba(243, 243, 243, 1))",
-    },
-    1: {
-        up: "linear-gradient(rgba(230, 159, 133, 1),rgba(212, 126, 139, 1))",
-        down: "linear-gradient(rgba(138, 82, 94, 1),rgba(220, 129, 106, 1))",
-    },
-    2: {
-        up: "linear-gradient(rgba(141, 216, 209, 1),rgba(142, 164, 206, 1))",
-        down: "linear-gradient(rgba(94, 99, 124, 1),rgba(123, 167, 203, 1))",
-    },
-    3: {
-        up: "linear-gradient(rgba(152, 216, 141, 1),rgba(118, 186, 95, 1))",
-        down: "linear-gradient(rgba(95, 125, 103, 1),rgba(125, 206, 123, 1))",
-    },
-    4: {
-        up: "linear-gradient(rgba(201, 216, 141, 1),rgba(206, 192, 142, 1))",
-        down: "linear-gradient(rgba(123, 124, 94, 1),rgba(203, 181, 123, 1))",
-    },
-    5: {
-        up: "linear-gradient(rgba(183, 141, 216, 1),rgba(147, 142, 206, 1))",
-        down: "linear-gradient(rgba(116, 94, 124, 1),rgba(144, 123, 203, 1))",
-    },
-    6: {
-        up: "linear-gradient(rgba(228, 129, 218, 1),rgba(227, 121, 185, 1))",
-        down: "linear-gradient(rgba(123, 94, 124, 1),rgba(203, 123, 185, 1))",
-    },
-} 
 
 export const Dice = ({ diceValue }) => (
     <Container>
@@ -81,3 +51,34 @@ const Top = styled(Face)`
     height: 80px;
     border-radius: 8px;
 `
+
+const diceGradiants = {
+    0: {
+        up: "linear-gradient(rgba(255, 255, 255, 1),rgba(249, 249, 249, 1),rgba(223, 223, 223, 1))",
+        down: "linear-gradient(rgba(175, 175, 175, 1),rgba(243, 243, 243, 1))",
+    },
+    1: {
+        up: "linear-gradient(rgba(230, 159, 133, 1),rgba(212, 126, 139, 1))",
+        down: "linear-gradient(rgba(138, 82, 94, 1),rgba(220, 129, 106, 1))",
+    },
+    2: {
+        up: "linear-gradient(rgba(141, 216, 209, 1),rgba(142, 164, 206, 1))",
+        down: "linear-gradient(rgba(94, 99, 124, 1),rgba(123, 167, 203, 1))",
+    },
+    3: {
+        up: "linear-gradient(rgba(152, 216, 141, 1),rgba(118, 186, 95, 1))",
+        down: "linear-gradient(rgba(95, 125, 103, 1),rgba(125, 206, 123, 1))",
+    },
+    4: {
+        up: "linear-gradient(rgba(201, 216, 141, 1),rgba(206, 192, 142, 1))",
+        down: "linear-gradient(rgba(123, 124, 94, 1),rgba(203, 181, 123, 1))",
+    },
+    5: {
+        up: "linear-gradient(rgba(183, 141, 216, 1),rgba(147, 142, 206, 1))",
+        down: "linear-gradient(rgba(116, 94, 124, 1),rgba(144, 123, 203, 1))",
+    },
+    6: {
+        up: "linear-gradient(rgba(228, 129, 218, 1),rgba(227, 121, 185, 1))",
+        down: "linear-gradient(rgba(123, 94, 124, 1),rgba(203, 123, 185, 1))",
+    },
+}

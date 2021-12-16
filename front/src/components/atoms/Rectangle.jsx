@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from "styled-components"
 
-export const Rectangle = () => (
-    <Shape />
-)
+export const Rectangle = () => <Shape />
 
 const Shape = styled("div")`
     width: 105px;
