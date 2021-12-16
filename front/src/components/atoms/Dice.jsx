@@ -17,8 +17,8 @@ const Container = styled("div")`
     position: relative;
 `
 const Cube = styled("div")`
-    width: 112px;
-    height: 112px;
+    width: 80px;
+    height: 80px;
     top: ${({ index }) => `${50 + -index}px` };
     transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
@@ -38,7 +38,7 @@ const Face = styled("div")`
     position: absolute;
     -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
-    width: 112px;
+    width: 80px;
     height: 4px; //4px
     float: left;
     overflow: hidden;
@@ -48,6 +48,6 @@ const Top = styled(Face)`
     transform: rotatex(90deg) rotatey(0deg) translateX(0px) translateY(0px) translateZ(56px);
     -moz-transform: rotatex(90deg) rotatey(0deg) translateX(0px) translateY(0px) translateZ(56px);
     -webkit-transform: rotatex(90deg) rotatey(0deg) translateX(0px) translateY(0px) translateZ(56px);
-    height: 112px;
+    height: 80px;
     border-radius: 8px;
 `
