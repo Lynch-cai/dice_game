@@ -66,7 +66,7 @@ def get_dices_match(dice_value_occurrence_list):
     for side_value_index, dice_value_occurrence in enumerate(
         dice_value_occurrence_list
     ):
-        if side_value_index == 0 and dice_value_occurrence >= 1:
+        if side_value_index == 0 and dice_value_occurrence > 0:
             list_dices_match.append(
                 [dice_value_occurrence, side_value_index + 1]
             )

@@ -3,13 +3,16 @@ from back.helpers.utils import check_user_boolean_response
 from back.module.score import analyse_score_winner
 from back.module.turn import turn_manager
 
-# Manage game of dice
-# -------- PARAMETERS --------
-# play_again : TYPE = Boolean | Restart new game directly when TRUE
-# same_user : TYPE = Boolean | Restart the game with same user
-# add_user : TYPE = Array | Array of the new users to add for the new game
 
 def dice_game_manager(play_again):
+
+    """
+    # Manage game of dice
+    # -------- PARAMETERS --------
+    # play_again : TYPE = Boolean | Restart new game directly when TRUE
+    # same_user : TYPE = Boolean | Restart the game with same user
+    # add_user : TYPE = Array | Array of the new users to add for the new game
+    """
 
     # Global game stats
 
@@ -46,23 +49,24 @@ def dice_game_manager(play_again):
 
                 # Manage player turn then return results
                 turn_result = turn_manager(player)
-                print("result",turn_result)
+                print("result =====>", turn_result)
 
-                # TODO Update full player's information
-                print(player)
+                # TODO Check & update player rank
+
+                # TODO Update full player information
+
+
                 player.update({
-                    "score": turn_result["score"],
-                    "roll_nb": turn_result[""]
-
+                    "score": player["score"] + turn_result["score"],
+                    "roll_nb": player["roll_nb"] + turn_result["roll_nb"],
+                    "potential_points_lost": player["potential_points_lost"] + turn_result["potential_points_lost"],
+                    "turn": player["turn"] + 1,
+                    "bonus": {"full_roll": player["bonus"]["full_roll"] + turn_result["bonus"]["full_roll"],
+                              "standard": player["bonus"]["standard"] + turn_result["bonus"]["standard"]},
                 })
-                turn = {
-                    "win": False,
-                    "score": 0,
-                    "dices": NB_DICE,
-                    "roll_nb": 0,
-                    "potential_points_lost": 0,
-                    "bonus": {"full_roll": 0, "standard": 0}
-                }
+                print(player)
+
+
                 # Print total scores for each players
                 total_score = "total score : "
                 for player in players:
@@ -71,7 +75,8 @@ def dice_game_manager(play_again):
 
                 # TODO Update game stats
 
-                # TODO Check & update players rank
+
+
 
                 # Check for winner after every turn
 
