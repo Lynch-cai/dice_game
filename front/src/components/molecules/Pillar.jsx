@@ -18,7 +18,6 @@ const Container = styled("div")`
 `
 
 const DiceContainer = styled("div")`
-    background: blue;
     width: 100px;
     position: absolute;
     top: -40px;
