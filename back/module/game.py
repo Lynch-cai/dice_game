@@ -49,7 +49,20 @@ def dice_game_manager(play_again):
                 print("result",turn_result)
 
                 # TODO Update full player's information
-                player.update({"score":turn_result["score"]})
+                print(player)
+                player.update({
+                    "score": turn_result["score"],
+                    "roll_nb": turn_result[""]
+
+                })
+                turn = {
+                    "win": False,
+                    "score": 0,
+                    "dices": NB_DICE,
+                    "roll_nb": 0,
+                    "potential_points_lost": 0,
+                    "bonus": {"full_roll": 0, "standard": 0}
+                }
                 # Print total scores for each players
                 total_score = "total score : "
                 for player in players:

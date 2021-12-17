@@ -24,8 +24,7 @@ def add_player(player_id):
             "rank": 0,
             "turn": 0,
             "roll_nb": 0,
-            "full_roll_nb": 0,
-            "bonus_nb": 0,
+            "bonus": {"full_roll": 0,"standard":0},
             "potential_point_lost": 0,
     }
     return player
