@@ -93,6 +93,7 @@ def dice_game_manager(play_again):
                     # print(game_winner_printer)
 
                     print("Someone win ! Game in 6 turn")
+                    display_logs_end_game(players)
                     display_stat()
 
                     # Game restart
@@ -107,3 +108,16 @@ def dice_game_manager(play_again):
 
     else:
         print('Good by see you next time')
+
+
+def display_logs_end_game(players):
+
+    win = ""
+    for player in players:
+        if player['score'] < 2000:
+            win = "lose"
+        else:
+            win = "win"
+        print(
+            f"{player['username']} {win}!  scoring {player['score']} in {player['roll_nb']} roll with {player['bonus']['full_roll']} full roll,{player['bonus']['standard']} bonus and {player['potential_points_lost']} potential points lost"
+        )
