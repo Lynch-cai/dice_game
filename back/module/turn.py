@@ -1,9 +1,6 @@
-import random
-from back.module.score import analyse_score
-from ..constant import (
-    NB_DICE_SIDE,
-    THRESHOLD_BONUS,
-)
+from back.helpers.utils import check_user_boolean_response
+from ..constant import NB_DICE
+from .roll import random_roll_generator
 
 MAX_TURN_SCORING = {"name_player": "", "turn_score": 0}
 LONGEST_TURNING = {"name_player": "", "nb_roll": 0}
@@ -11,82 +8,68 @@ MAX_TURN_LOSS = {"name_player": "", "turn_score": 0}
 MEAN_SCORE_TURN = []
 MEAN_NON_SCORE_TURN = []
 
-def turn_generator(player_name):
-    global MEAN_SCORE_TURN, MEAN_NON_SCORE_TURN
-    play = True
-    nb_dices = 5
-    turn_score = 0
-    nb_roll = 0
+# Manage turn for single player
+# -------- PARAMETERS --------
+# player_name : TYPE = str | name of the player
 
-    while play:
-        roll_dice = roll_dice_set(nb_dices)
-        dices_match = get_dices_match(roll_dice)
-        analyse = analyse_score(roll_dice)
-        score = analyse[0]
-        turn_score += score
-        nb_dices = sum(analyse[1])
+def turn_manager(player):
+
+    turn = {
+        "win": False,
+        "score": 0,
+        "dices": NB_DICE,
+        "roll_nb": 0,
+        "potential_points_lost": 0,
+        "bonus": {"full_roll": 0, "standard": 0}
+    }
+
+    # Text to introduce turn
+    print(f"turn #{player['turn']}--> {player['username']} rank #{player['rank']}, score {player['score']}")
+    input("press any key to roll the dices ! ")
+
+    while turn["dices"] > 0:
+        # Generate random roll and get associated output
+        roll_output = random_roll_generator(turn["dices"])
+        print(roll_output)
+
+        # Update dices number
+        turn["dices"] = roll_output["dices_left"]
+
+        # Update turn score
+        turn["score"] += roll_output['score']
+
+        print(roll_output)
+
         print(
-            f"scoring dices {dices_match} scoring {score} potential total turn score {turn_score} remaining dice to roll : {nb_dices}"
+            f"roll # {turn['roll_nb']} : scoring dices {roll_output['dices_matched']} scoring {roll_output['score']} potential total turn score {turn['score']} remaining dice to roll : {turn['dices']}"
         )
-        if score > 0:
-            resp_user = input("[y/n]?")
-            if resp_user == "n":
+
+        if roll_output['score'] > 0:
+
+            roll_again = check_user_boolean_response(input('roll again ? [y/n]'))
+
+            if not roll_again:
                 apply_max_turn_score(
-                    name_player=player_name, turn_score=turn_score
+                    name_player=player["username"], turn_score= turn["score"]
                 )
-                MEAN_SCORE_TURN.append(int(turn_score))
-                play = False
-                return score, roll_dice
+                MEAN_SCORE_TURN.append(int(turn["dices"]))
+                turn["win"] = True
+                turn["roll_nb"] += 1
+                print(f"you win this turn, scoring {turn['score']} pts")
+                return turn
             else:
-                nb_roll += 1
+                turn["roll_nb"] += 1
         else:
             print(
-                f"you lose this turn and a potential to score {turn_score} pts"
+                f"you lose this turn and a potential to score {turn['score']} pts"
             )
-            apply_max_turn_loss(name_player=player_name, turn_score=turn_score)
-            MEAN_NON_SCORE_TURN.append(turn_score)
-            turn_score = 0
-            play = False
-            return score, roll_dice
+            apply_max_turn_loss(name_player=player["username"], turn_score= turn['score'])
+            MEAN_NON_SCORE_TURN.append(turn["score"])
+            turn_update = {'score': 0, 'win': False}
+            turn.update(turn_update)
+            return turn
 
-    apply_longest_turn(name_player=player_name, nb_roll=nb_roll)
-
-
-
-
-
-# Generate roll dice and return occurence list
-# nb_dice_to_roll : number of dice per turn
-
-def roll_dice_set(nb_dice_to_roll):
-    dice_value_occurrence_list = [0] * NB_DICE_SIDE
-    for n in range(nb_dice_to_roll):
-        dice_value = random.randint(1, NB_DICE_SIDE)
-        dice_value_occurrence_list[dice_value - 1] += 1
-
-    return dice_value_occurrence_list
-
-
-def get_dices_match(dice_value_occurrence_list):
-    list_dices_match = []
-    for side_value_index, dice_value_occurrence in enumerate(
-        dice_value_occurrence_list
-    ):
-        if side_value_index == 0 and dice_value_occurrence >= 1:
-            list_dices_match.append(
-                [dice_value_occurrence, side_value_index + 1]
-            )
-        elif side_value_index == 4 and dice_value_occurrence > 0:
-            list_dices_match.append(
-                [dice_value_occurrence, side_value_index + 1]
-            )
-        else:
-            nb_dices_match = dice_value_occurrence // THRESHOLD_BONUS
-            if nb_dices_match > 0:
-                list_dices_match.append(
-                    [nb_dices_match * 3, side_value_index + 1]
-                )
-    return list_dices_match
+    apply_longest_turn(name_player=player["username"], nb_roll= turn["roll_nb"])
 
 
 def apply_max_turn_loss(name_player, turn_score):
@@ -120,3 +103,7 @@ def calcul_means(list_mean):
     if len(list_mean) > 0:
         mean = stat.mean(list_mean)
         return mean
+
+
+
+

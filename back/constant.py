@@ -12,3 +12,5 @@ ACE_BONUS_MULTIPLIER = 1000  # Special multiplier for aces bonus
 # Target total score to win by default
 DEFAULT_TARGET_SCORE = 2000
 
+NB_DICE = 5  # NB DICE PER TURN
+

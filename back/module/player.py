@@ -1,6 +1,7 @@
-from back.utils import check_user_boolean_response
+from back.helpers.utils import check_user_boolean_response
 
-# Return all players
+# Set up and return all players
+
 def add_players():
     new_player = True
     players = []
@@ -10,11 +11,15 @@ def add_players():
         new_player = check_user_boolean_response(input(f"New player ? [y/n]"))
     return players
 
-# Ask & Return single player
+
+# Prompt and return player username
+# -------- PARAMETERS --------
+# player_id : TYPE = int | Id of the new player
+
 def add_player(player_id):
     player_username = input(f"Player {player_id} ! What's your name ?")
     player = {
-        player_username: {
+            "username": player_username,
             "score": 0,
             "rank": 0,
             "turn": 0,
@@ -22,6 +27,5 @@ def add_player(player_id):
             "full_roll_nb": 0,
             "bonus_nb": 0,
             "potential_point_lost": 0,
-        }
     }
     return player
