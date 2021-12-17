@@ -111,6 +111,9 @@ def dice_game_manager(play_again):
 
 
 def display_logs_end_game(players):
+    """
+    Display logs with winner and losers
+    """
 
     win = ""
     for player in players:

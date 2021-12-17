@@ -36,8 +36,7 @@ def apply_statistic_turn(username, score, loss, turn):
 
 def calcul_means(list_mean):
     """
-    Check if the player's value is higher than the old one.
-    if yes, update the statistics dictionnary
+    Make mean from values in list
     """
     if len(list_mean) > 0:
         mean = stat.mean(list_mean)
@@ -45,6 +44,9 @@ def calcul_means(list_mean):
 
 
 def display_stat():
+    """
+    Make mean in score and non score and display all stats
+    """
     mean_score = calcul_means(GAME_STAT["mean_scoring_turn"])
     mean_non_score = calcul_means(GAME_STAT["mean_non_scoring_turn"])
     print(

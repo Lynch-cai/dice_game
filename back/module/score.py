@@ -1,10 +1,11 @@
-from back.constant import (
+from constant import (
     THRESHOLD_BONUS,
     ACE_BONUS_MULTIPLIER,
     STD_BONUS_MULTIPLIER,
     SCORING_DICE_VALUE_LIST,
     SCORING_MULTIPLIER_LIST,
-    DEFAULT_TARGET_SCORE)
+    DEFAULT_TARGET_SCORE,
+)
 
 # xxxxxx
 # -------- PARAMETERS --------
@@ -12,10 +13,7 @@ from back.constant import (
 
 
 def analyse_bonus_score(dice_value_occurrence_list):
-    bonus = {
-        "full_roll": 0,
-        "standard": 0
-    }
+    bonus = {"full_roll": 0, "standard": 0}
     score = 0
     for side_value_index, dice_value_occurrence in enumerate(
         dice_value_occurrence_list
@@ -39,6 +37,7 @@ def analyse_bonus_score(dice_value_occurrence_list):
 # -------- PARAMETERS --------
 # dice_value_occurrence_list : TYPE =  | xxxxxx
 
+
 def analyse_standard_score(dice_value_occurrence_list):
     score = 0
     for scoring_value, scoring_multiplier in zip(
@@ -57,8 +56,9 @@ def analyse_standard_score(dice_value_occurrence_list):
 # -------- PARAMETERS --------
 # dice_value_occurrence_list : TYPE =  | xxxxxx
 
+
 def analyse_score(dice_value_occurrence_list):
-    bonus_score, dice_value_occurrence_list,bonus = analyse_bonus_score(
+    bonus_score, dice_value_occurrence_list, bonus = analyse_bonus_score(
         dice_value_occurrence_list
     )
 
@@ -74,6 +74,3 @@ def analyse_score(dice_value_occurrence_list):
 def analyse_score_winner(players):
     for player in players:
         return True if player["score"] > DEFAULT_TARGET_SCORE else False
-
-
-
