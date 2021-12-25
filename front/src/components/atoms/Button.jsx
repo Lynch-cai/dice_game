@@ -2,30 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 
 // type: secondary
-export const Button = ({ content, type }) => (
-  <Container type={type}>
+export const Button = ({ content, type, size }) => (
+  <Container type={type} size={size}>
     <Content>{content}</Content>
   </Container>
 );
 
 const Container = styled('div')`
-  padding: 1rem 4rem;
-  box-sizing: content-box;
-  background: ${(props) => (props.type == 'secondary' ? '#F1F1F1' : 'none')};
+  padding: ${(props) => (props.size == 'small' ? '0.5rem 1rem' : '1rem 4rem')};
+  background: ${(props) => (props.type == 'secondary' ? 'none' : '#F1F1F1')};
   border: ${(props) =>
     props.type == 'secondary'
-      ? 'transparent solid 0.125rem'
-      : 'rgba(255, 255, 255, 0.95) 0.125rem solid'};
-  color: ${(props) => (props.type == 'secondary' ? '#2E0F4C' : 'rgba(255, 255, 255, 0.95)')};
+      ? 'rgba(255, 255, 255, 0.95) 0.125rem solid'
+      : 'transparent solid 0.125rem'};
+  color: ${(props) => (props.type == 'secondary' ? 'rgba(255, 255, 255, 0.95)' : '#2E0F4C')};
   transition: background-color 0.15s ease;
   cursor: pointer;
   &:hover {
     background-color: ${(props) =>
-      props.type == 'secondary' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.1)'};
+      props.type == 'secondary' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.85)'};
   }
   &:active {
     background-color: ${(props) =>
-      props.type == 'secondary' ? 'rgba(255, 255, 255, 0.75)' : 'rgba(255, 255, 255, 0.2)'};
+      props.type == 'secondary' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.75)'};
   }
 `;
 
