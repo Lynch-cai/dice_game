@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Diamond } from '../atoms/Diamond';
+import { Input } from '../atoms/Input';
 
 // in_game: true
 // turn: true
@@ -8,7 +9,7 @@ export const User = ({ diamond_content, first_content, second_content, in_game, 
   <Container in_game={in_game} turn={turn}>
     <Diamond content={diamond_content} />
     <Container_text>
-      <First_content>{first_content}</First_content>
+      <Input default_value={first_content} type="secondary" />
       <Second_content>{second_content}</Second_content>
     </Container_text>
   </Container>
