@@ -11,13 +11,13 @@ code {
 }
 
 @font-face {
-  font-family: "Futura";
-  src: url(assets/fonts/futura_book.ttf) format("truetype");
+  font-family: 'Futura';
+  src: url(assets/fonts/futura_book.ttf) format('truetype');
   font-weight: 500;
 }
 
 @font-face {
-  font-family: "Futura";
-  src: url(assets/fonts/futura_heavy.ttf) format("truetype");
+  font-family: 'Futura';
+  src: url(assets/fonts/futura_heavy.ttf) format('truetype');
   font-weight: 600;
 }
