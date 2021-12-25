@@ -2,6 +2,7 @@ import './App.css';
 import { GameTable } from './components/organisms/GameTable';
 import { User } from './components/molecules/User';
 import { Button } from './components/atoms/Button';
+import { Input } from './components/atoms/Input';
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
         />
         <Button content="Start" type="secondary" />
         <Button content="Start" type="primary" />
+        <Input default_value="123456789123456789" type="secondary"/>
+        <Input default_value="999999" type="primary"/>
       </header>
     </div>
   );
