@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <GameTable />
-        <User
+        {/* <User
           diamond_content="1"
           first_content="Theotim"
           second_content="100 points"
@@ -23,7 +23,7 @@ function App() {
         <Input default_value="123456789123456789" type="secondary" />
         <Input default_value="999999" type="primary" />
         <SectionPlayer />
-        <SectionSetting />
+        <SectionSetting /> */}
       </header>
     </div>
   );
