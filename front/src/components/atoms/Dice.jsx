@@ -20,53 +20,53 @@ export const Dice = ({ diceValue }) => (
   </Container>
 );
 
-const DiceDots1 = ({diceValue}) => (
+const DiceDots1 = ({ diceValue }) => (
   <DiceDots>
-    <DiceDot left="" right="" top="" bottom=""/>
+    <DiceDot left="" right="" top="" bottom="" />
   </DiceDots>
-)
+);
 
-const DiceDots2 = ({diceValue}) => (
+const DiceDots2 = ({ diceValue }) => (
   <DiceDots>
-    <DiceDot left="16" right="" top="16" bottom=""/>
-    <DiceDot left="" right="16" top="" bottom="16"/>
+    <DiceDot left="16" right="" top="16" bottom="" />
+    <DiceDot left="" right="16" top="" bottom="16" />
   </DiceDots>
-)
+);
 
-const DiceDots3 = ({diceValue}) => (
+const DiceDots3 = ({ diceValue }) => (
   <DiceDots>
-    <DiceDot left="12" right="" top="12" bottom=""/>
-    <DiceDot left="" right="" top="" bottom=""/>
-    <DiceDot left="" right="12" top="" bottom="12"/>
+    <DiceDot left="12" right="" top="12" bottom="" />
+    <DiceDot left="" right="" top="" bottom="" />
+    <DiceDot left="" right="12" top="" bottom="12" />
   </DiceDots>
-)
-const DiceDots4 = ({diceValue}) => (
+);
+const DiceDots4 = ({ diceValue }) => (
   <DiceDots>
-    <DiceDot left="16" right="" top="16" bottom=""/>
-    <DiceDot left="16" right="" top="" bottom="16"/>
-    <DiceDot left="" right="16" top="" bottom="16"/>
-    <DiceDot left="" right="16" top="16" bottom=""/>
+    <DiceDot left="16" right="" top="16" bottom="" />
+    <DiceDot left="16" right="" top="" bottom="16" />
+    <DiceDot left="" right="16" top="" bottom="16" />
+    <DiceDot left="" right="16" top="16" bottom="" />
   </DiceDots>
-)
-const DiceDots5 = ({diceValue}) => (
+);
+const DiceDots5 = ({ diceValue }) => (
   <DiceDots>
-    <DiceDot left="12" right="" top="12" bottom=""/>
-    <DiceDot left="12" right="" top="" bottom="12"/>
-    <DiceDot left="" right="12" top="" bottom="12"/>
-    <DiceDot left="" right="12" top="12" bottom=""/>
-    <DiceDot left="" right="" top="" bottom=""/>
+    <DiceDot left="12" right="" top="12" bottom="" />
+    <DiceDot left="12" right="" top="" bottom="12" />
+    <DiceDot left="" right="12" top="" bottom="12" />
+    <DiceDot left="" right="12" top="12" bottom="" />
+    <DiceDot left="" right="" top="" bottom="" />
   </DiceDots>
-)
-const DiceDots6 = ({diceValue}) => (
+);
+const DiceDots6 = ({ diceValue }) => (
   <DiceDots>
-    <DiceDot left="16" right="" top="12" bottom=""/>
-    <DiceDot left="16" right="" top="32" bottom=""/>
-    <DiceDot left="16" right="" top="" bottom="12"/>
-    <DiceDot left="" right="16" top="12" bottom=""/>
-    <DiceDot left="" right="16" top="32" bottom=""/>
-    <DiceDot left="" right="16" top="" bottom="12"/>
+    <DiceDot left="16" right="" top="12" bottom="" />
+    <DiceDot left="16" right="" top="32" bottom="" />
+    <DiceDot left="16" right="" top="" bottom="12" />
+    <DiceDot left="" right="16" top="12" bottom="" />
+    <DiceDot left="" right="16" top="32" bottom="" />
+    <DiceDot left="" right="16" top="" bottom="12" />
   </DiceDots>
-)
+);
 
 const DiceDots = styled('div')`
   width: 100%;
@@ -75,19 +75,18 @@ const DiceDots = styled('div')`
   justify-content: center;
   align-items: center;
   position: relative;
-`
+`;
 const DiceDot = styled('div')`
   background: white;
   width: 0.875rem;
   height: 0.875rem;
   border-radius: 100%;
   position: absolute;
-  left: ${(props) => (props.left)}px;
-  right: ${(props) => (props.right)}px;
-  top: ${(props) => (props.top)}px;
-  bottom: ${(props) => (props.bottom)}px;
-`
-
+  left: ${(props) => props.left}px;
+  right: ${(props) => props.right}px;
+  top: ${(props) => props.top}px;
+  bottom: ${(props) => props.bottom}px;
+`;
 
 const Container = styled('div')`
   position: relative;
@@ -159,5 +158,3 @@ const diceGradiants = {
     down: 'linear-gradient(rgba(123, 94, 124, 1),rgba(203, 123, 185, 1))',
   },
 };
-
-
