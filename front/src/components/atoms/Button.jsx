@@ -1,30 +1,44 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// type: secondary
-export const Button = ({ content, type, size }) => (
-  <Container type={type} size={size}>
+export const Button = ({ content, type }) => (
+  <ButtonContainer type={type}>
     <Content>{content}</Content>
-  </Container>
+  </ButtonContainer>
 );
 
-const Container = styled('div')`
-  padding: ${(props) => (props.size == 'small' ? '0.5rem 1rem' : '1rem 4rem')};
-  background: ${(props) => (props.type == 'secondary' ? 'none' : '#F1F1F1')};
-  border: ${(props) =>
-    props.type == 'secondary'
+export const RadioButton = ({ content, isActive }) => (
+  <RadioButtonContainer isActive={isActive}>
+    <Content>{content}</Content>
+  </RadioButtonContainer>
+);
+
+const ButtonTemplate = styled('div')`
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+`;
+
+const ButtonContainer = styled(ButtonTemplate)`
+  padding: 16px 61px;
+  background: ${({ type }) => (type == 'secondary' ? 'none' : '#F1F1F1')};
+  color: ${({ type }) => (type == 'secondary' ? 'rgba(255, 255, 255, 0.95)' : '#2E0F4C')};
+  border: ${({ type }) =>
+    type == 'secondary'
       ? 'rgba(255, 255, 255, 0.95) 0.125rem solid'
       : 'transparent solid 0.125rem'};
-  color: ${(props) => (props.type == 'secondary' ? 'rgba(255, 255, 255, 0.95)' : '#2E0F4C')};
-  transition: background-color 0.15s ease;
-  cursor: pointer;
   &:hover {
-    background-color: ${(props) =>
-      props.type == 'secondary' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.85)'};
+    background-color: ${({ type }) =>
+      type == 'secondary' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.85)'};
   }
-  &:active {
-    background-color: ${(props) =>
-      props.type == 'secondary' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.75)'};
+`;
+
+const RadioButtonContainer = styled(ButtonTemplate)`
+  background: ${({ isActive }) => (isActive ? 'rgba(255, 255, 255, 0.2)' : 'transparent')};
+  border: rgba(255, 255, 255, 0.95) 0.125rem solid;
+  color: rgba(255, 255, 255, 0.95);
+  padding: 11px 15px;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
   }
 `;
 
