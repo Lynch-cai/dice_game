@@ -12,7 +12,6 @@ class Turn:
     def __init__(self, player):
         self.player = player
         self.roll = Roll(self.player)
-        self.win = False
         self.score = 0
         self.dices = NB_DICE
         self.roll_nb = 0
@@ -28,6 +27,9 @@ class Turn:
         input("press any key to roll the dices ! ")
 
     def turn_manager(self):
+        """
+        Loop that applies all actions during the turn
+        """
         self.start()
         while self.dices > 0:
             # Generate random roll and get associated output

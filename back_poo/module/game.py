@@ -14,7 +14,8 @@ class Game:
 
     def add_player(self, player_id):
         """
-        Add all players
+        Add player by player_id
+        Parameters: player_id
         """
         player_username = input(f"Player {player_id} ! What's your name ?")
         player = Player(id=player_id, username=player_username)
@@ -30,22 +31,30 @@ class Game:
         print(total_score)
 
     def analyse_score_winner(self):
-        # Check if any player reached DEFAULT_TARGET_SCORE
-        # -------- PARAMETERS --------
-        # players : TYPE = array of dict| array of players
+        """
+        Check if any player reached DEFAULT_TARGET_SCORE
+        return boolean
+
+        """
         for player in self.list_player:
-            if player.score > 400:
+            if player.score > DEFAULT_TARGET_SCORE:
                 return True
             else:
                 False
 
     def update_rank(self, player):
+        """
+        Return the player's rank
+        """
         list_player = self.list_player
         list_player.sort(key=lambda player: player.score, reverse=True)
         rank = list_player.index(player)
         return rank + 1
 
     def start_game(self):
+        """
+        boot loop to add players
+        """
         add_player = True
         player_id = 1
 
@@ -68,11 +77,7 @@ class Game:
     def dice_game_manager(self):
 
         """
-        Manage game of dice
-        -------- PARAMETERS --------
-        play_again : TYPE = Boolean | Restart new game directly when TRUE
-        same_user : TYPE = Boolean | Restart the game with same user
-        add_user : TYPE = Array | Array of the new users to add for the new game
+        Game loop that activates the players' turns
         """
         self.start_game()
         while self.running:
