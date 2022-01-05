@@ -37,6 +37,9 @@ class Stats:
             return mean
 
     def display_stat(self):
+        """
+        Display all statistics for the end of the game
+        """
         mean_score = self.calcul_means(self.mean_scoring_turn)
         mean_non_score = self.calcul_means(self.mean_non_scoring_turn)
         print(
