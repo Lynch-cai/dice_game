@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 // type: secondary
-export const Input = ({ default_value, type }) => {
+export const Input = ({ input_default_value, type }) => {
   return (
     <InputText
       maxLength={type == 'secondary' ? '14' : '6'}
       type={type}
-      defaultValue={default_value}
+      defaultValue={input_default_value}
     />
   );
 };
