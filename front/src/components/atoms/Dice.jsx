@@ -99,9 +99,9 @@ const Cube = styled('div')`
   transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-  transform: rotateX(330deg) rotateY(315deg) rotateZ(0deg);
-  -moz-transform: rotateX(330deg) rotateY(315deg) rotateZ(0deg);
-  -webkit-transform: rotateX(330deg) rotateY(315deg) rotateZ(0deg);
+  transform: rotateX(325deg) rotateY(315deg) rotateZ(0deg);
+  -moz-transform: rotateX(325deg) rotateY(315deg) rotateZ(0deg);
+  -webkit-transform: rotateX(325deg) rotateY(315deg) rotateZ(0deg);
   margin: auto;
   position: relative;
   -moz-transform-style: preserve-3d;
