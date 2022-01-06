@@ -1,13 +1,13 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 import { Label } from '../atoms/Label';
 
-export const Statistic = ({label_content, value}) => (
+export const Statistic = ({ label_content, value }) => (
   <Container>
-    <Label label_content={label_content}/>
+    <Label label_content={label_content} />
     <Value>{value}</Value>
   </Container>
-)
+);
 
 const Container = styled('div')`
   display: flex;

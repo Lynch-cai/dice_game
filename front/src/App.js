@@ -15,18 +15,52 @@ function App() {
       <header className="App-header">
         <GameTable />
 
-        <Card width="360" height="572" title="Setting" button_type="secondary" button_content="Apply">
+        <Card
+          width="360"
+          height="572"
+          title="Setting"
+          button_type="secondary"
+          button_content="Apply">
           <InputContainer label_content="score to win" input_default_value="2000" />
           <InputContainer label_content="bonus x" input_default_value="100" />
           <InputContainer label_content="bonux ace x" input_default_value="1000" />
           <Roll label_content="total roll" />
         </Card>
 
-        <Card width="360" height="572" title="Players" button_type="secondary" button_content="Add player">
-          <User diamond_content="1" first_content="Player 1" second_content="remove" in_game="false" turn="false" />
-          <User diamond_content="2" first_content="Player 2" second_content="remove" in_game="false" turn="false" />
-          <User diamond_content="3" first_content="Player 3" second_content="remove" in_game="false" turn="false" />
-          <User diamond_content="4" first_content="Player 4" second_content="remove" in_game="false" turn="false" />
+        <Card
+          width="360"
+          height="572"
+          title="Players"
+          button_type="secondary"
+          button_content="Add player">
+          <User
+            diamond_content="1"
+            first_content="Player 1"
+            second_content="remove"
+            in_game="false"
+            turn="false"
+          />
+          <User
+            diamond_content="2"
+            first_content="Player 2"
+            second_content="remove"
+            in_game="false"
+            turn="false"
+          />
+          <User
+            diamond_content="3"
+            first_content="Player 3"
+            second_content="remove"
+            in_game="false"
+            turn="false"
+          />
+          <User
+            diamond_content="4"
+            first_content="Player 4"
+            second_content="remove"
+            in_game="false"
+            turn="false"
+          />
         </Card>
 
         <Card width="728" height="auto" title="Global statistic" button_type="none">

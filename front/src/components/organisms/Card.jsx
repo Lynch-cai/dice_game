@@ -1,22 +1,20 @@
-import React, { Children } from 'react'
-import styled from 'styled-components'
+import React, { Children } from 'react';
+import styled from 'styled-components';
 import { Button } from '../atoms/Button';
 
-export const Card = ({width, height, title, children, button_type, button_content}) => (
+export const Card = ({ width, height, title, children, button_type, button_content }) => (
   <Container width={width} height={height}>
     <Header>
       <H2>{title}</H2>
       <HR></HR>
     </Header>
-    <Body>
-      {children}
-    </Body>
+    <Body>{children}</Body>
     <Footer>
       <HR></HR>
       {button_type != 'none' ? <Button type={button_type} content={button_content} /> : ''}
     </Footer>
   </Container>
-)
+);
 
 const Container = styled('div')`
   display: flex;
@@ -24,8 +22,8 @@ const Container = styled('div')`
   justify-content: space-between;
   padding: 2rem;
   background-color: rgba(255, 255, 255, 0.1);
-  width: ${(props) => (props.width)}px;
-  height: ${(props) => (props.height)}px;
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
   box-sizing: border-box;
 `;
 
