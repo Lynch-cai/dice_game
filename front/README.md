@@ -1,7 +1,7 @@
 ## TODO's
 ### Components
     Fait > Terminer le placement des chiffres sur les dés
-    > Faire les composants bouton + radio buttons
+    Fait > Faire les composants bouton + radio buttons
     Fait > Gérer plusieurs tailles du plateau
     Fait > Card de stats
 ### Interfaces
