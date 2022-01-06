@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Label } from '../atoms/Label';
-import { Button } from '../atoms/Button';
+import { RadioButton } from '../atoms/Button';
 
 export const Roll = ({ label_content }) => (
   <Container>
     <Label label_content={label_content} />
     <RollContainer>
-      <Button content="5x5" size="small" type="secondary" />
-      <Button content="4x4" size="small" type="secondary" />
-      <Button content="3x3" size="small" type="secondary" />
+      <RadioButton content="5x5" />
+      <RadioButton content="4x4" />
+      <RadioButton content="3x3" />
     </RollContainer>
   </Container>
 );
